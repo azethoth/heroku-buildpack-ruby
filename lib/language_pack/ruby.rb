@@ -101,6 +101,7 @@ class LanguagePack::Ruby < LanguagePack::Base
   def compile
     Dir.chdir(build_path)
     remove_vendor_bundle
+    remove_bunlde_config
     install_ruby
     install_jvm
     setup_language_pack_environment
@@ -403,6 +404,8 @@ ERROR
 
   def install_icu4c
     puts ">>>> install_icu4c"
+    puts ">>>> #{pwd}"
+    puts `cat bundle/config`
     dir = File.join('vendor', ICU4C_VENDOR_PATH)
     FileUtils.mkdir_p dir
     Dir.chdir(dir) do
@@ -450,6 +453,14 @@ ERROR
     end
   end
 
+  def remove_bunlde_config
+    bundle_config_path = ".bundle/config"
+    if File.exist? bundle_config_path
+      puts "(Tmp only) Removing #{bundle_config_path} to force an icu4c recompile"
+      File.unlink bundle_config_path
+    end
+  end
+
   # runs bundler to install the dependencies
   def build_bundler
     log("bundle") do
@@ -478,12 +489,6 @@ ERROR
 
       load_bundler_cache
       
-      bundle_config_path = ".bundle/config"
-      if File.exist? bundle_config_path
-        puts "(Tmp only) Removing #{bundle_config_path} to force an icu4c recompile"
-        File.unlink bundle_config_path
-      end
-
       bundler_output = ""
       Dir.mktmpdir("libyaml-") do |tmpdir|
         libyaml_dir = "#{tmpdir}/#{LIBYAML_PATH}"
