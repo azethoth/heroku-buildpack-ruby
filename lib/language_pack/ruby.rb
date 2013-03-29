@@ -403,6 +403,7 @@ ERROR
   end
 
   def install_icu4c
+    pwd = run("pwd").chomp
     puts ">>>> install_icu4c"
     puts ">>>> #{pwd}"
     puts `cat bundle/config`
