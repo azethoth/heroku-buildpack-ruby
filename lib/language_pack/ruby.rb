@@ -476,6 +476,12 @@ ERROR
       topic("Installing dependencies using #{version}")
 
       load_bundler_cache
+      
+      bundle_config_path = ".bundle/config"
+      if File.exist? bundle_config_path
+        puts "(Tmp only) Removing #{bundle_config_path} to force an icu4c recompile"
+        File.unlink bundle_config_path
+      end
 
       bundler_output = ""
       Dir.mktmpdir("libyaml-") do |tmpdir|
