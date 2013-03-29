@@ -402,6 +402,7 @@ ERROR
   end
 
   def install_icu4c
+    puts ">>>> install_icu4c"
     dir = File.join('vendor', ICU4C_VENDOR_PATH)
     FileUtils.mkdir_p dir
     Dir.chdir(dir) do
