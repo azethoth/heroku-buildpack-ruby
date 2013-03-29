@@ -101,7 +101,6 @@ class LanguagePack::Ruby < LanguagePack::Base
   def compile
     Dir.chdir(build_path)
     remove_vendor_bundle
-    remove_bunlde_config
     install_ruby
     install_jvm
     setup_language_pack_environment
@@ -454,14 +453,6 @@ ERROR
     end
   end
 
-  def remove_bunlde_config
-    bundle_config_path = ".bundle/config"
-    if File.exist? bundle_config_path
-      puts "(Tmp only) Removing #{bundle_config_path} to force an icu4c recompile"
-      File.unlink bundle_config_path
-    end
-  end
-
   # runs bundler to install the dependencies
   def build_bundler
     log("bundle") do
@@ -504,6 +495,9 @@ ERROR
         # codon since it uses bundler. set BUNDLE_BUILD__CHARLOCK_HOLMES to
         # ensure charlock_holmes uses our custom ICU4C install
         env_vars       = "env BUNDLE_GEMFILE=#{pwd}/Gemfile BUNDLE_CONFIG=#{pwd}/.bundle/config BUNDLE_BUILD__CHARLOCK_HOLMES=\"--with-icu-dir=#{pwd}/vendor/#{ICU4C_VENDOR_PATH}\" CPATH=#{yaml_include}:$CPATH CPPATH=#{yaml_include}:$CPPATH LIBRARY_PATH=#{yaml_lib}:$LIBRARY_PATH RUBYOPT=\"#{syck_hack}\""
+        puts `ls -altr #{pwd}/vendor/`
+        puts `ls -al #{pwd}/vendor/#{ICU4C_VENDOR_PATH}`
+
         puts "Running: #{bundle_command}"
         bundler_output << pipe("#{env_vars} #{bundle_command} --no-clean 2>&1")
 
