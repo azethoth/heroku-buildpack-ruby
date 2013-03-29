@@ -494,7 +494,7 @@ ERROR
         # we need to set BUNDLE_CONFIG and BUNDLE_GEMFILE for
         # codon since it uses bundler. set BUNDLE_BUILD__CHARLOCK_HOLMES to
         # ensure charlock_holmes uses our custom ICU4C install
-        env_vars       = "env BUNDLE_GEMFILE=#{pwd}/Gemfile BUNDLE_CONFIG=#{pwd}/.bundle/config BUNDLE_BUILD__CHARLOCK_HOLMES=\"--with-icu-dir=#{pwd}/vendor/#{ICU4C_VENDOR_PATH}/\" CPATH=#{yaml_include}:$CPATH CPPATH=#{yaml_include}:$CPPATH LIBRARY_PATH=#{yaml_lib}:$LIBRARY_PATH RUBYOPT=\"#{syck_hack}\" ICU_DIR=\"#{pwd}/vendor/#{ICU4C_VENDOR_PATH}/\""
+        env_vars       = "env BUNDLE_GEMFILE=#{pwd}/Gemfile BUNDLE_CONFIG=#{pwd}/.bundle/config BUNDLE_BUILD__CHARLOCK_HOLMES=\"--with-icu-dir=#{pwd}/vendor/#{ICU4C_VENDOR_PATH}/\" CPATH=#{yaml_include}:$CPATH CPPATH=#{yaml_include}:$CPPATH LIBRARY_PATH=#{yaml_lib}:$LIBRARY_PATH RUBYOPT=\"#{syck_hack}\" ICU_DIR=\"#{pwd}/vendor/#{ICU4C_VENDOR_PATH}\""
 
         commands = [
           "cat #{pwd}/.bundle/config",
