@@ -402,10 +402,6 @@ ERROR
   end
 
   def install_icu4c
-    pwd = run("pwd").chomp
-    puts ">>>> install_icu4c"
-    puts ">>>> #{pwd}"
-    puts `cat bundle/config`
     dir = File.join('vendor', ICU4C_VENDOR_PATH)
     FileUtils.mkdir_p dir
     Dir.chdir(dir) do
